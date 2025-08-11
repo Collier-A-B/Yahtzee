@@ -6,6 +6,9 @@ package collier.game_management;
 public class GameManager {
     private static GameManager instance;
 
+    private int currentPlayerIndx;
+
+
     private GameManager() {
         // Initialize game state here
     }
