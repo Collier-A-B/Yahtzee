@@ -1,7 +1,10 @@
 package collier.scoring;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import collier.custom_exceptions.input_exceptions.InvalidScoreCategoryException;
 
@@ -202,13 +205,14 @@ public class ScoreSheet {
     }
 
     private int checkNumberOfAKind(int[] diceValues) {
-        int[] diceValueOcurrences = new int[6]; // array tracking number of occurences of each dice value (arr[0] = dice value 1)
-        
+        int[] diceValueOcurrences = new int[6]; // array tracking number of occurences of each dice value (arr[0] = dice
+                                                // value 1)
+
         int maxNumOccurences = 0;
         for (int value : diceValues) {
             diceValueOcurrences[value - 1] += 1;
-            if(diceValueOcurrences[value-1] > maxNumOccurences)
-                maxNumOccurences = diceValueOcurrences[value-1];
+            if (diceValueOcurrences[value - 1] > maxNumOccurences)
+                maxNumOccurences = diceValueOcurrences[value - 1];
         }
 
         return maxNumOccurences;
@@ -271,6 +275,140 @@ public class ScoreSheet {
     }
 
     public boolean chooseFullHouse(int gameIndex, int[] diceValues) {
-        
+        try {
+            if (FullHouse.size() > gameIndex) {
+                throw new InvalidScoreCategoryException();
+            }
+
+            int firstNum = diceValues[0];
+            int firstNumCount = 0;
+            int secondNum = 0;
+            int secondNumCount = 0;
+
+            // iterate through and count number of occurences
+            // break if dice value does not match first or second num
+
+            for (int i = 1; i < diceValues.length; i++) {
+                if (diceValues[i] == firstNum) {
+                    firstNumCount++;
+                } else if (secondNum == 0) {
+                    secondNum = diceValues[i];
+                    secondNumCount++;
+                } else if (diceValues[i] == secondNum) {
+                    secondNum++;
+                } else {
+                    FullHouse.add(gameIndex, 0);
+                    return true;
+                }
+            }
+
+            if ((firstNumCount == 3 && secondNumCount == 2) || (firstNumCount == 2 && secondNumCount == 3)) {
+                FullHouse.add(gameIndex, 25);
+            } else {
+                FullHouse.add(gameIndex, 0);
+            }
+            return true;
+        } catch (InvalidScoreCategoryException e) {
+            System.err.println(e.getMessage() + ": Full House");
+            return false; // Indicating failure, category already used
+        } catch (Exception e) {
+            System.err.println("Unknown Exception: " + e.getMessage());
+            return false; // Indicating failure
+        }
+
     }
+
+    public boolean chooseSmallStraight(int gameIndex, int[] diceValues) {
+        try {
+            if (SmallStraight.size() > gameIndex) {
+                throw new InvalidScoreCategoryException();
+            }
+            Set<Integer> diceSet = new HashSet<>(
+                    Arrays.asList(Arrays.stream(diceValues).boxed().toArray(Integer[]::new)));
+
+            if (diceSet.size() >= 4) {
+                SmallStraight.add(gameIndex, 30);
+            } else {
+                SmallStraight.add(gameIndex, 0);
+            }
+            return true;
+        } catch (InvalidScoreCategoryException e) {
+            System.err.println(e.getMessage() + ": Small Straight");
+            return false; // Indicating failure, category already used
+        } catch (Exception e) {
+            System.err.println("Unknown Exception: " + e.getMessage());
+            return false; // Indicating failure
+        }
+
+    }
+
+    public boolean chooseLargeStraight(int gameIndex, int[] diceValues) {
+        try {
+            if (LargeStraight.size() > gameIndex) {
+                throw new InvalidScoreCategoryException();
+            }
+            Set<Integer> diceSet = new HashSet<>(
+                    Arrays.asList(Arrays.stream(diceValues).boxed().toArray(Integer[]::new)));
+
+            if (diceSet.size() >= 5) {
+                LargeStraight.add(gameIndex, 30);
+            } else {
+                LargeStraight.add(gameIndex, 0);
+            }
+            return true;
+        } catch (InvalidScoreCategoryException e) {
+            System.err.println(e.getMessage() + ": Large Straight");
+            return false; // Indicating failure, category already used
+        } catch (Exception e) {
+            System.err.println("Unknown Exception: " + e.getMessage());
+            return false; // Indicating failure
+        }
+    }
+
+    public boolean chooseYahtzee(int gameIndex, int[] diceValues) {
+        try {
+            if (Yahtzee.size() > gameIndex) {
+                throw new InvalidScoreCategoryException();
+            }
+
+            boolean validYahtzee = checkNumberOfAKind(diceValues) >= 5;
+
+            if (validYahtzee) {
+                Yahtzee.add(gameIndex, 50);
+            } else {
+                Yahtzee.add(gameIndex, 0);
+            }
+            return true; // Indicating success
+        } catch (InvalidScoreCategoryException e) {
+            System.err.println(e.getMessage() + ": Yahtzee");
+            return false; // Indicating failure, category already used
+        } catch (Exception e) {
+            System.err.println("Unknown Exception: " + e.getMessage());
+            return false; // Indicating failure
+        }
+    }
+
+    public boolean chooseChance(int gameIndex, int[] diceValues) {
+        try {
+            if (Chance.size() > gameIndex) {
+                throw new InvalidScoreCategoryException();
+            }
+
+            int score = 0;
+            for(int value : diceValues) {
+                score+= value;
+            }
+
+            Chance.add(gameIndex, score);
+            return true; // Indicating success
+        } catch (InvalidScoreCategoryException e) {
+            System.err.println(e.getMessage() + ": Yahtzee");
+            return false; // Indicating failure, category already used
+        } catch (Exception e) {
+            System.err.println("Unknown Exception: " + e.getMessage());
+            return false; // Indicating failure
+        }
+    }
+
+    // TODO: Check for a bonus yahtzee at each choice
 }
