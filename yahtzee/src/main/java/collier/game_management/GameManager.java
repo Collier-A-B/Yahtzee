@@ -19,9 +19,9 @@ public class GameManager {
     private int numberOfRolls = 0;                  // number of rolls current player has used
     private int playerCount = 0;                    // number of players in game (must be >= min and <= max)
 
-    private final YahtzeePlayer[] players = new YahtzeePlayer[MAX_PLAYERS];
-    private final ScoreSheet[] playerScoreSheets = new ScoreSheet[MAX_PLAYERS];
-    private final DiceManager diceManager = DiceManager.getDiceManager();
+    private final YahtzeePlayer[] players = new YahtzeePlayer[MAX_PLAYERS];         // array of players
+    private final ScoreSheet[] playerScoreSheets = new ScoreSheet[MAX_PLAYERS];     // array of player score sheets
+    private final DiceManager diceManager = DiceManager.getDiceManager();           // dice manager instance
 
     private GameManager() {
         // Initialize game state here

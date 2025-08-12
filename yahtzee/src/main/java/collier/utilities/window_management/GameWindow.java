@@ -1,41 +1,111 @@
 package collier.utilities.window_management;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
 import javax.swing.JFrame;
+
+import collier.game_management.GameManager;
 
 /**
  * Singleton Class for the game window
  */
-public class GameWindow {
+public class GameWindow extends JFrame implements WindowListener{
     private static GameWindow instance;
-    private JFrame frame;
+
+    private final GameManager gameManagerInstance = GameManager.getInstance();
 
     private GameWindow() {
-        frame = new JFrame("Yahtzee");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        super("Yahtzee");
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(800, 600);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     public static GameWindow getInstance() {
         if (instance == null) {
             instance = new GameWindow();
+            instance.addWindowListener(instance);
         }
         return instance;
     }
 
     public boolean closeFrame() {
-        frame.dispose();
+        this.dispose();
         instance = null;
         return true;
     }
 
     /**
      * Revalidates and repaints the frame to update the display
-     * TODO: Update after player turn
+     * 
      */
     public void updateDisplay() {
-        frame.revalidate();
-        frame.repaint();
+        this.revalidate();
+        this.repaint();
+    }
+
+    /**
+     * Called when window is configured to be active window
+     * @param e window event
+     */
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("Window has been activated");
+    }
+
+    /**
+     * Triggered upon closing of window via "dispose" method
+     * @param e
+     */
+    @Override
+    public void windowClosed(WindowEvent e) {
+        System.out.println("Window has been closed");
+    }
+
+    /**
+     * Triggered when user tries to dismiss window via system menu
+     * @param e
+     */
+    @Override
+    public void windowClosing(WindowEvent e) {
+        System.out.println("Window about to close");
+    }
+
+    /**
+     * Triggered when window isn't the active window anymore
+     * @param e
+     */
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+        System.out.println("window has been deactivated");
+    }
+
+    /**
+     * Triggered when window is reopened from it's minimized state
+     * @param e
+     */
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+        System.out.println("window has been restored");
+    }
+
+    /**
+     * Triggered when window is minimized
+     * @param e
+     */
+    @Override
+    public void windowIconified(WindowEvent e) {
+        System.out.println("Window has been minimized");
+    }
+
+    /**
+     * Triggered first time a window appears
+     * @param e
+     */
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("Window has been opened");
     }
 }
