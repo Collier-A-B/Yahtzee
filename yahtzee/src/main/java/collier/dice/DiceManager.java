@@ -1,13 +1,16 @@
 package collier.dice;
 
+import collier.custom_exceptions.game_state_exceptions.InvalidNumberDiceException;
+
 /**
  * Singleton for Dice Manager, which holds dice and all related methods
  */
 public class DiceManager {
     private static DiceManager instance;
 
-    private final int[] dice = new int[5];
-    private final boolean[] holdDice = new boolean[5];
+    private static final int numDice = 5;
+    private final int[] dice = new int[numDice];
+    private final boolean[] holdDice = new boolean[numDice];
 
     private DiceManager() {
 
@@ -26,13 +29,33 @@ public class DiceManager {
     }
 
     public boolean flipDieHoldValue(int diceIndx) {
-        if (diceIndx > 5 || diceIndx < 0) {
-            // throw exception
-            
+        try {
+            if (diceIndx > 5 || diceIndx < 0) {
+                // throw exception
+                throw new InvalidNumberDiceException();
+            }
+            holdDice[diceIndx] = !holdDice[diceIndx];
+            return true;
+        } catch (InvalidNumberDiceException e) {
+            System.err.println("Dice indx out of bounds: " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.err.println("Unknown exception occured: " + e.getMessage());
+            return false;
         }
+
     }
 
     public void rollDice() {
-
+        for (int dieIndx = 0; dieIndx < dice.length; dieIndx++) {
+            if (!holdDice[dieIndx]) {
+                // assign random number between 1 & 6
+                int newVal = 0;
+                while (newVal < 1 || newVal > 6) {
+                    newVal = (int) (Math.random() * 6) + 1;
+                }
+                dice[dieIndx] = newVal;
+            }
+        }
     }
 }
