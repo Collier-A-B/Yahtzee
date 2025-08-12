@@ -5,7 +5,7 @@ import collier.custom_exceptions.game_state_exceptions.InvalidNumberDiceExceptio
 /**
  * Singleton for Dice Manager, which holds dice and all related methods
  */
-public class DiceManager {
+public final class DiceManager {
     private static DiceManager instance;
 
     private static final int numDice = 5;
@@ -13,7 +13,8 @@ public class DiceManager {
     private final boolean[] holdDice = new boolean[numDice];
 
     private DiceManager() {
-
+        rollDice();
+        resetDiceHolds();
     }
 
     public static DiceManager getDiceManager() {
