@@ -24,8 +24,15 @@ public class GameWindow extends JFrame implements WindowListener{
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+
+        initMenuBar();
     }
 
+    /**
+     * Constructor helper function
+     * 
+     * Initializes Menu Bar of parent frame
+     */
     private void initMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         
@@ -34,6 +41,24 @@ public class GameWindow extends JFrame implements WindowListener{
         optionsMenu.add(endGameOption);
 
         menuBar.add(optionsMenu);
+    }
+
+    /**
+     * Constructor helper function
+     * 
+     * Initializes Player Scores panel of parent frame
+     */
+    private void initScorePanel() {
+
+    }
+
+    /**
+     * Contructor helper function
+     * 
+     * Initializes main pannel for game functionality
+     */
+    private void initGamePanel() {
+
     }
 
     public static GameWindow getInstance() {
