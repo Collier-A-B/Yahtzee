@@ -11,9 +11,9 @@ import collier.custom_exceptions.input_exceptions.InvalidScoreCategoryException;
 public class ScoreSheet {
 
     // ScoreSheet class to hold the scores for a single player, with indexing for
-    // each game
-    // e.g. Aces[1] is for the players score in the Aces category for game 2
-    // Aces[0] is the player's score in the Aces category for game 1
+    // each round
+    // e.g. Aces[1] is for the players score in the Aces category for round 2
+    // Aces[0] is the player's score in the Aces category for round 1
 
     // Upper section categories
     private final List<Integer> Aces = new ArrayList<>();
@@ -39,12 +39,12 @@ public class ScoreSheet {
     }
 
     /**
-     * Calculates the total score for a specific game index (game number - 1).
+     * Calculates the total score for a specific round index (round number - 1).
      * 
-     * @param gameIndex index of the game (0-based)
-     * @return the total score for the specified game index
+     * @param roundIndex index of the round (0-based)
+     * @return the total score for the specified round index
      */
-    public int calculateTotalScore(int gameIndex) {
+    public int calculateTotalScore(int roundIndex) {
         return -1; // TODO: implement total score calculation
     }
 
@@ -53,15 +53,15 @@ public class ScoreSheet {
     //
 
     /**
-     * Choose Aces category for a specific game and update the score sheet.
+     * Choose Aces category for a specific round and update the score sheet.
      * 
-     * @param gameIndex  game index (0-based)
+     * @param roundIndex  round index (0-based)
      * @param diceValues array of dice values
      * @return true if the category was successfully chosen, false otherwise
      */
-    public boolean chooseAces(int gameIndex, int[] diceValues) {
+    public boolean chooseAces(int roundIndex, int[] diceValues) {
         try {
-            if (Aces.size() > gameIndex) {
+            if (Aces.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
 
             }
@@ -73,7 +73,7 @@ public class ScoreSheet {
                     score += 1;
                 }
             }
-            Aces.add(gameIndex, score);
+            Aces.add(roundIndex, score);
             return true; // Indicating success
         } catch (InvalidScoreCategoryException e) {
             System.err.println(e.getMessage() + ": Aces");
@@ -84,9 +84,9 @@ public class ScoreSheet {
         }
     }
 
-    public boolean chooseTwos(int gameIndex, int[] diceValues) {
+    public boolean chooseTwos(int roundIndex, int[] diceValues) {
         try {
-            if (Twos.size() > gameIndex) {
+            if (Twos.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
 
@@ -97,7 +97,7 @@ public class ScoreSheet {
                     score += 2;
                 }
             }
-            Twos.add(gameIndex, score);
+            Twos.add(roundIndex, score);
             return true; // Indicating success
         } catch (InvalidScoreCategoryException e) {
             System.err.println(e.getMessage() + ": Twos");
@@ -108,9 +108,9 @@ public class ScoreSheet {
         }
     }
 
-    public boolean chooseThrees(int gameIndex, int[] diceValues) {
+    public boolean chooseThrees(int roundIndex, int[] diceValues) {
         try {
-            if (Threes.size() > gameIndex) {
+            if (Threes.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
 
@@ -121,7 +121,7 @@ public class ScoreSheet {
                     score += 3;
                 }
             }
-            Threes.add(gameIndex, score);
+            Threes.add(roundIndex, score);
             return true; // Indicating success
         } catch (InvalidScoreCategoryException e) {
             System.err.println(e.getMessage() + ": Threes");
@@ -132,9 +132,9 @@ public class ScoreSheet {
         }
     }
 
-    public boolean chooseFours(int gameIndex, int[] diceValues) {
+    public boolean chooseFours(int roundIndex, int[] diceValues) {
         try {
-            if (Fours.size() > gameIndex) {
+            if (Fours.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
 
@@ -145,7 +145,7 @@ public class ScoreSheet {
                     score += 4;
                 }
             }
-            Fours.add(gameIndex, score);
+            Fours.add(roundIndex, score);
             return true; // Indicating success
         } catch (InvalidScoreCategoryException e) {
             System.err.println(e.getMessage() + ": Fours");
@@ -156,9 +156,9 @@ public class ScoreSheet {
         }
     }
 
-    public boolean chooseFives(int gameIndex, int[] diceValues) {
+    public boolean chooseFives(int roundIndex, int[] diceValues) {
         try {
-            if (Fives.size() > gameIndex) {
+            if (Fives.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
 
@@ -169,7 +169,7 @@ public class ScoreSheet {
                     score += 5;
                 }
             }
-            Fives.add(gameIndex, score);
+            Fives.add(roundIndex, score);
             return true; // Indicating success
         } catch (InvalidScoreCategoryException e) {
             System.err.println(e.getMessage() + ": Fives");
@@ -180,9 +180,9 @@ public class ScoreSheet {
         }
     }
 
-    public boolean chooseSixes(int gameIndex, int[] diceValues) {
+    public boolean chooseSixes(int roundIndex, int[] diceValues) {
         try {
-            if (Sixes.size() > gameIndex) {
+            if (Sixes.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
 
@@ -193,7 +193,7 @@ public class ScoreSheet {
                     score += 6;
                 }
             }
-            Sixes.add(gameIndex, score);
+            Sixes.add(roundIndex, score);
             return true; // Indicating success
         } catch (InvalidScoreCategoryException e) {
             System.err.println(e.getMessage() + ": Sixes");
@@ -218,9 +218,9 @@ public class ScoreSheet {
         return maxNumOccurences;
     }
 
-    public boolean chooseThreeOfAKind(int gameIndex, int[] diceValues) {
+    public boolean chooseThreeOfAKind(int roundIndex, int[] diceValues) {
         try {
-            if (ThreeOfAKind.size() > gameIndex) {
+            if (ThreeOfAKind.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
 
@@ -234,7 +234,7 @@ public class ScoreSheet {
                     score += value;
             }
 
-            ThreeOfAKind.add(gameIndex, score);
+            ThreeOfAKind.add(roundIndex, score);
 
             return true; // Indicating success
         } catch (InvalidScoreCategoryException e) {
@@ -246,9 +246,9 @@ public class ScoreSheet {
         }
     }
 
-    public boolean chooseFourOfAKind(int gameIndex, int[] diceValues) {
+    public boolean chooseFourOfAKind(int roundIndex, int[] diceValues) {
         try {
-            if (FourOfAKind.size() > gameIndex) {
+            if (FourOfAKind.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
 
@@ -262,7 +262,7 @@ public class ScoreSheet {
                     score += value;
             }
 
-            FourOfAKind.add(gameIndex, score);
+            FourOfAKind.add(roundIndex, score);
 
             return true; // Indicating success
         } catch (InvalidScoreCategoryException e) {
@@ -274,9 +274,9 @@ public class ScoreSheet {
         }
     }
 
-    public boolean chooseFullHouse(int gameIndex, int[] diceValues) {
+    public boolean chooseFullHouse(int roundIndex, int[] diceValues) {
         try {
-            if (FullHouse.size() > gameIndex) {
+            if (FullHouse.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
 
@@ -297,15 +297,15 @@ public class ScoreSheet {
                 } else if (diceValues[i] == secondNum) {
                     secondNum++;
                 } else {
-                    FullHouse.add(gameIndex, 0);
+                    FullHouse.add(roundIndex, 0);
                     return true;
                 }
             }
 
             if ((firstNumCount == 3 && secondNumCount == 2) || (firstNumCount == 2 && secondNumCount == 3)) {
-                FullHouse.add(gameIndex, 25);
+                FullHouse.add(roundIndex, 25);
             } else {
-                FullHouse.add(gameIndex, 0);
+                FullHouse.add(roundIndex, 0);
             }
             return true;
         } catch (InvalidScoreCategoryException e) {
@@ -318,18 +318,18 @@ public class ScoreSheet {
 
     }
 
-    public boolean chooseSmallStraight(int gameIndex, int[] diceValues) {
+    public boolean chooseSmallStraight(int roundIndex, int[] diceValues) {
         try {
-            if (SmallStraight.size() > gameIndex) {
+            if (SmallStraight.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
             Set<Integer> diceSet = new HashSet<>(
                     Arrays.asList(Arrays.stream(diceValues).boxed().toArray(Integer[]::new)));
 
             if (diceSet.size() >= 4) {
-                SmallStraight.add(gameIndex, 30);
+                SmallStraight.add(roundIndex, 30);
             } else {
-                SmallStraight.add(gameIndex, 0);
+                SmallStraight.add(roundIndex, 0);
             }
             return true;
         } catch (InvalidScoreCategoryException e) {
@@ -342,18 +342,18 @@ public class ScoreSheet {
 
     }
 
-    public boolean chooseLargeStraight(int gameIndex, int[] diceValues) {
+    public boolean chooseLargeStraight(int roundIndex, int[] diceValues) {
         try {
-            if (LargeStraight.size() > gameIndex) {
+            if (LargeStraight.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
             Set<Integer> diceSet = new HashSet<>(
                     Arrays.asList(Arrays.stream(diceValues).boxed().toArray(Integer[]::new)));
 
             if (diceSet.size() >= 5) {
-                LargeStraight.add(gameIndex, 30);
+                LargeStraight.add(roundIndex, 30);
             } else {
-                LargeStraight.add(gameIndex, 0);
+                LargeStraight.add(roundIndex, 0);
             }
             return true;
         } catch (InvalidScoreCategoryException e) {
@@ -365,18 +365,18 @@ public class ScoreSheet {
         }
     }
 
-    public boolean chooseYahtzee(int gameIndex, int[] diceValues) {
+    public boolean chooseYahtzee(int roundIndex, int[] diceValues) {
         try {
-            if (Yahtzee.size() > gameIndex) {
+            if (Yahtzee.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
 
             boolean validYahtzee = checkNumberOfAKind(diceValues) >= 5;
 
             if (validYahtzee) {
-                Yahtzee.add(gameIndex, 50);
+                Yahtzee.add(roundIndex, 50);
             } else {
-                Yahtzee.add(gameIndex, 0);
+                Yahtzee.add(roundIndex, 0);
             }
             return true; // Indicating success
         } catch (InvalidScoreCategoryException e) {
@@ -388,9 +388,9 @@ public class ScoreSheet {
         }
     }
 
-    public boolean chooseChance(int gameIndex, int[] diceValues) {
+    public boolean chooseChance(int roundIndex, int[] diceValues) {
         try {
-            if (Chance.size() > gameIndex) {
+            if (Chance.size() > roundIndex) {
                 throw new InvalidScoreCategoryException();
             }
 
@@ -399,7 +399,7 @@ public class ScoreSheet {
                 score+= value;
             }
 
-            Chance.add(gameIndex, score);
+            Chance.add(roundIndex, score);
             return true; // Indicating success
         } catch (InvalidScoreCategoryException e) {
             System.err.println(e.getMessage() + ": Yahtzee");

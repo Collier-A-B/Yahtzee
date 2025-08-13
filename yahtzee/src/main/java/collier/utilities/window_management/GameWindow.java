@@ -4,6 +4,9 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 import collier.game_management.GameManager;
 
@@ -21,6 +24,16 @@ public class GameWindow extends JFrame implements WindowListener{
         this.setSize(800, 600);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+    }
+
+    private void initMenuBar() {
+        JMenuBar menuBar = new JMenuBar();
+        
+        JMenu optionsMenu = new JMenu("Options");
+        JMenuItem endGameOption = new JMenuItem("End Game");
+        optionsMenu.add(endGameOption);
+
+        menuBar.add(optionsMenu);
     }
 
     public static GameWindow getInstance() {
